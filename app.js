@@ -1,5 +1,6 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
+var mongoose = require('mongoose');
 var sassMiddleware = require('node-sass-middleware');
 var browserify = require('browserify-middleware');
 
@@ -29,6 +30,23 @@ app.use(
 
 
 app.get('/javascripts/bundle.js', browserify('./client/script.js'));
+
+if(app.get('env')== 'development'){
+  var browserSync= require('browser-sync');
+  var config={
+    files: ["public/**/*.{js,css}","client/*.js","sass/**/*.scss","views/**/*.hbs"],
+    logLevel: 'debug',
+    logSnippet: false,
+    reloadDelay: 3000,
+    reloadOnRestart: true
+  };
+  var bs=browserSync(config);
+  app.use(require('connect-browser-sync')(bs));
+
+}
+var dbConnectionString = process.env.MONGODB_URI|| 'mongodb://localhost';
+mongoose.connect(dbConnectionString + '/todos');
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
