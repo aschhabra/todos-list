@@ -7,6 +7,10 @@ var TodoSchema = new Schema({
   done: {type: 'Boolean'}
 });
 
+TodoSchema.pre('save',next=>{
+  
+  next();
+});
 var Todo = mongoose.model('Todo',TodoSchema);
 
 module.exports = Todo;
