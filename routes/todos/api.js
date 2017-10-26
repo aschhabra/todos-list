@@ -16,7 +16,7 @@ router.route('/')
     todo.text=req.body.text;
     todo.saveAsync()
     .then(function(todo){
-      console.log("sucess");
+      console.log("success");
       res.json({'status':'success', 'todo': todo});  
     })
     .catch(function(e){
@@ -50,11 +50,13 @@ router.route('/:id')
     });
   })
   .delete(function(req,res,next){
-    Todo.findByIdAndRemoveAsync(req.parms.id)
+    Todo.findByIdAndRemoveAsync({_id: req.params.id})
     .then(function(deletedTodo){
+    console.log('delete success');
       res.json({'status':'success','todo':deletedTodo});
     })
     .catch(function(e){
+      console.log('delete fail');
       res.status(400).json({'status':'fail','error':e});
     });
   });

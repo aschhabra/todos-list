@@ -5,7 +5,7 @@ var request =  require('supertest');
 var chaiHttp = require('chai-http');
 var server = require('../app');
 var should = require('should-http');
-var model= require('../models/todos');
+var TodoList= require('../models/todos');
 
 var expect = chai.expect;
 
@@ -17,9 +17,14 @@ describe('Todos list API Integration Tests', function() {
 
 describe('Model',()=>{
   beforeEach((done)=>{
-    model.remove({},(err)=>{
+    var list= new TodoList({text: 'Creating todo list', done: true});
+    list.save((err,list)=>{
       done();
     });
+  });
+  afterEach((done)=>{
+    TodoList.collection.drop();
+      done();
   });
  
   describe('/GET TodoList',()=>{
@@ -43,7 +48,6 @@ describe('Model',()=>{
           .send(item)
           .end((err,res) => {
               expect(res.body).to.be.an('object');
-            
             done();
           });
     });
@@ -64,12 +68,10 @@ describe('Model',()=>{
   });
   describe('/GET id todo list',()=>{
     it('it should get a list from item by given id',(done)=>{
-      let list= new model({text:'Create an Web app using React App'});
-      console.log(list);
-      list.save((err,list)=>{
+      let list= new TodoList({text:'Create an Web app using React App'});
+      list.save((err,item)=>{
         chai.request(server)
-          .get('/api/todos/'+list.id)
-          .send(list)
+          .get('/api/todos/'+item.id)
           .end((err,res)=>{
               res.should.have.status(200);
               expect(res.body).to.have.property('text');
@@ -77,15 +79,14 @@ describe('Model',()=>{
             done();
           });
         });
-      });
     });
+  });
   describe('/POST/:id todo list',()=>{
     it('it should update a list from item by given id',(done)=>{
-      let list= new model({text:'Create an Web app using React App'});
-      console.log(list);
-      list.save((err,list)=>{
+      let list= new TodoList({text:'Create an Web app using React App'});
+      list.save((err,item)=>{
         chai.request(server)
-          .put('/api/todos/'+list.id)
+          .put('/api/todos/'+item.id)
           .send({text: 'Creating an TDD Web app using React'})
           .end((err,res)=>{
               res.should.have.status(200);
@@ -94,6 +95,22 @@ describe('Model',()=>{
             done();
           });
         });
-      });
     });
+  });
+  describe('/delete/:id todo list',()=>{
+    it('it should delete a list from item by given id',(done)=>{
+      let list= new TodoList({text:'Create an Web app using React App',done:'false'});
+      console.log(list);
+      list.save((err,item)=>{
+        chai.request(server)
+          .delete('/api/todos/'+item.id)
+          .end((err,res)=>{
+              res.should.have.status(200);
+              //expect(res.body).to.have.property('text');
+              //expect(res.body).to.have.property('_id').eql(list.id);
+            done();
+          });
+        });
+    });
+  });
 });
