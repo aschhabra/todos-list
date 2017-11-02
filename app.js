@@ -29,7 +29,10 @@ app.use(
   })
 );
 
+browserify.settings({
+  transform: ['hbsfy']
 
+});
 app.get('/javascripts/bundle.js', browserify('./client/script.js'));
 
 if(app.get('env')== 'development'){
@@ -55,6 +58,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/fonts',express.static(path.join(__dirname,"nobe_modules/bootsrap-sass/assets/fonts")));
 
 app.use('/', index);
 app.use('/users', users);
