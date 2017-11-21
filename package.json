@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "mocha -w"
+    "//": "casperjs test/casperTest.js",
+    "test": "node test/web.js",
+    "lint-css": "sass-lint sass/stylesheets/style.scss"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
@@ -27,11 +29,19 @@
   },
   "devDependencies": {
     "browser-sync": "^2.18.13",
+    "casper-chai": "^0.3.0",
+    "casperjs": "^1.1.4",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "connect-browser-sync": "^2.1.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
     "mocha": "^4.0.1",
+    "mocha-casperjs": "^0.6.0",
+    "mocha-phantomjs": "^4.1.0",
     "nodemon": "^1.12.1",
+    "phantom": "^4.0.5",
+    "sass-lint": "^1.12.1",
     "should": "^13.1.2",
     "should-http": "^0.1.1",
     "supertest": "^3.0.0"

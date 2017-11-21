@@ -11,7 +11,8 @@ $(function(){
       }, 
       dataType:'json',
       success: function(data){
-        var todo=data.todo[0];
+        //var todo=data.todo[0];
+        var todo=data.todo;
         var newLiHtml= todoTemplate(todo);
         $('form + ul').append(newLiHtml); 
         $('#add-todo-text').val('');
@@ -51,7 +52,7 @@ $(function(){
   var initTodoObserver = function(){
     var target= $('ul')[0];
     var config= {attrivutes: true, childList: true, characterData: true};
-    var observer= new MutationObserver(function(mutationReocords){
+    var observer= new MutationObserver(function(mutationRecords){
       $.each(mutationRecords,function(index,mutationRecord){
         updateTodoCount();
       });
