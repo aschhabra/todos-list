@@ -6,12 +6,29 @@ var chaiHttp = require('chai-http');
 var server = require('../app');
 var should = require('should-http');
 var TodoList= require('../models/todos');
-
+var casper = require("casper").create();
 var expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Todos list API Integration Tests', function() {
+describe('Home Page', function() {
+  
+  beforeEach((done)=>{
+    var list= new TodoList({text: 'Creating todo list', done: true});
+    list.save((err,list)=>{
+      done();
+    });
+    casper.start('http://localhost:3000/todos');
+  });
+  afterEach((done)=>{
+    TodoList.collection.drop();
+      done();
+  });
+  it('should have an element in DOM',()=>{
+    casper.waitForSelector('#add-todo-text',function(){
+      '#add-todo-text'.should.be.inDOM;
+    });
+  });
 
 });
 
