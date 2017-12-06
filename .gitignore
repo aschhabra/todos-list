@@ -15,3 +15,13 @@ Session.vim
 *~
 # Auto-generated tag files
 tags
+
+
+# coverage directory used by tools like istanbul
+coverage
+
+#nyc test coverage
+.nyc_output
+
+# optional npm cache directory 
+.npm
