@@ -49,7 +49,10 @@ if(app.get('env')== 'development'){
 
 }
 var dbConnectionString = process.env.MONGODB_URI|| 'mongodb://localhost';
-mongoose.connect(dbConnectionString + '/todos');
+mongoose.connect(dbConnectionString + '/todos', { useMongoClient: true });
+//                .then(() => require('./db-init')(express))
+//                .catch(err => console.error(err));
+//mongoose.openUri(dbConnectionString + '/todos');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
