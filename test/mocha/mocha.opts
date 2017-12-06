@@ -1,0 +1,7 @@
+--require should
+--reporter mocha-lcov-reporter
+--ui bdd
+--recursive
+--timeout 500
+--exit
+--ignore-leaks
