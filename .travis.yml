@@ -14,21 +14,11 @@ install:
 - npm -g install mocha
 - npm -g install chai
 before_script:
-- node start &
+- npm start &
 - sleep 5
 script:
 - npm run test
 - npm run casperTest
-after_script:
-  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-  - git remote add heroku git@heroku.com:todo-list-aschhabra.git
-  - echo "Host heroku.com" >> ~/.ssh/config
-  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
-  - echo "   CheckHostIP no" >> ~/.ssh/config
-  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
-  - heroku keys:clear
-  - yes | heroku keys:add
-  - yes | git push heroku master
 branches:
   only:
   - master
