@@ -48,12 +48,12 @@ if(app.get('env')== 'development'){
   app.use(require('connect-browser-sync')(bs));
 
 }
-var dbConnectionString = process.env.MONGODB_URI || 'mongodb://localhost';
-mongoose.connect(dbConnectionString + '/todos', { useMongoClient: true })
+var dbConnectionString = process.env.MONGODB_URI || 'mongodb://localhost/todos';
+mongoose.connect(dbConnectionString , { useMongoClient: true })
                 .then(connection =>{
                 })
                 .catch(err =>{
-                  
+                  console.log("Mongdb error"+err);                  
                 });
 //                .then(() => require('./db-init')(express))
 //                .catch(err => console.error(err));
