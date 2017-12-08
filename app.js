@@ -48,7 +48,7 @@ if(app.get('env')== 'development'){
   app.use(require('connect-browser-sync')(bs));
 
 }
-var dbConnectionString = process.env.MONGODB_URI|| 'mongodb://localhost';
+var dbConnectionString = process.env.MONGODB_URI || 'mongodb://localhost';
 mongoose.connect(dbConnectionString + '/todos', { useMongoClient: true })
                 .then(connection =>{
                 })
