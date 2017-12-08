@@ -49,7 +49,12 @@ if(app.get('env')== 'development'){
 
 }
 var dbConnectionString = process.env.MONGODB_URI|| 'mongodb://localhost';
-mongoose.connect(dbConnectionString + '/todos', { useMongoClient: true });
+mongoose.connect(dbConnectionString + '/todos', { useMongoClient: true })
+                .then(connection =>{
+                })
+                .catch(err =>{
+                  
+                });
 //                .then(() => require('./db-init')(express))
 //                .catch(err => console.error(err));
 //mongoose.openUri(dbConnectionString + '/todos');

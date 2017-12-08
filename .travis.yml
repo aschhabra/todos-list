@@ -7,16 +7,18 @@ before_install:
 - sudo apt-get update
 services:
 - mongodb
-before_script:
+install:
 - npm install
 - npm -g install casperjs
 - npm -g install phantomjs
 - npm -g install mocha
 - npm -g install chai
+before_script:
+- node start &
+- sleep 5
 script:
 - npm run test
-- node start &
-- npm casperTest
+- npm run casperTest
 after_script:
   - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
   - git remote add heroku git@heroku.com:todo-list-aschhabra.git
